@@ -29,28 +29,28 @@ import { Editor } from 'slate-react'
 ```js
 // 导入 `State` 模型。
 import { Editor } from 'slate-react'
-import { State } from 'slate'
+import { Value } from 'slate'
 
 // 构建初始状态…
-const initialState = State.fromJSON({
+const initialValue = Value.fromJSON({
   document: {
     nodes: [
       {
-        kind: 'block',
+        object: 'block',
         type: 'paragraph',
         nodes: [
           {
-            kind: 'text',
-            ranges: [
+            object: 'text',
+            leaves: [
               {
-                text: 'A line of text in a paragraph.'
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+                text: 'A line of text in a paragraph.',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 })
 ```
 
@@ -60,53 +60,47 @@ const initialState = State.fromJSON({
 // 导入 React！
 import React from 'react'
 import { Editor } from 'slate-react'
-import { State } from 'slate'
+import { Value } from 'slate'
 
-const initialState = State.fromJSON({
+const initialValue = Value.fromJSON({
   document: {
     nodes: [
       {
-        kind: 'block',
+        object: 'block',
         type: 'paragraph',
         nodes: [
           {
-            kind: 'text',
-            ranges: [
+            object: 'text',
+            leaves: [
               {
-                text: 'A line of text in a paragraph.'
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+                text: 'A line of text in a paragraph.',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 })
 
 // 定义我们的应用…
 class App extends React.Component {
-
   // 设置应用创建时的初始状态。
   state = {
-    state: initialState
+    value: initialValue,
   }
 
   // 发生变更时，使用新的编辑器状态更新应用的 React 状态。
-  onChange = ({ state }) => {
-    this.setState({ state })
+  onChange = ({ value }) => {
+    this.setState({ value })
   }
 
   // 渲染编辑器。
   render() {
-    return (
-      <Editor
-        state={this.state.state}
-        onChange={this.onChange}
-      />
-    )
+    return <Editor value={this.state.value} onChange={this.onChange} />
   }
-
 }
+
 ```
 
 你会发现传入 `Editor` 组件的 `onChange` 回调更新了应用的状态。这样，当编辑器重绘时，新的状态就会通过你的 change 反映出来了。
